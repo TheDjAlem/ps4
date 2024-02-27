@@ -30,11 +30,13 @@
         const player = document.getElementById('player');
         let leftStickX = 0;
         let leftStickY = 0;
+        let playerX = 50;
+        let playerY = 50;
 
         // Function to update player position
         function updatePosition() {
-            player.style.left = `${leftStickX * 10 + 50}%`; // Adjust multiplier as needed
-            player.style.top = `${leftStickY * 10 + 50}%`; // Adjust multiplier as needed
+            player.style.left = `${playerX}%`;
+            player.style.top = `${playerY}%`;
         }
 
         // Event listener for controller input
@@ -62,6 +64,14 @@
                 leftStickY = Math.min(Math.max(leftStickY, -1), 1);
                 
                 // Update player position based on joystick input
+                playerX += leftStickX;
+                playerY += leftStickY;
+
+                // Clamp player position to stay within the bounds of the page
+                playerX = Math.min(Math.max(playerX, 0), 100);
+                playerY = Math.min(Math.max(playerY, 0), 100);
+                
+                // Update player position
                 updatePosition();
             }
             
