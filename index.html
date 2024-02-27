@@ -63,9 +63,9 @@
                 leftStickX = Math.min(Math.max(leftStickX, -1), 1);
                 leftStickY = Math.min(Math.max(leftStickY, -1), 1);
                 
-                // Update player position based on joystick input
-                playerX += leftStickX;
-                playerY += leftStickY;
+                // Update player position based on joystick input with adjusted scaling
+                playerX += leftStickX * 0.5; // Adjust multiplier as needed
+                playerY += leftStickY * 0.5; // Adjust multiplier as needed
 
                 // Clamp player position to stay within the bounds of the page
                 playerX = Math.min(Math.max(playerX, 0), 100);
