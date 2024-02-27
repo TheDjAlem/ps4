@@ -1,22 +1,34 @@
 // script.js
-document.addEventListener("keydown", function(event) {
-    switch(event.key) {
-        case "ArrowUp":
-            // Handle up navigation
-            break;
-        case "ArrowDown":
-            // Handle down navigation
-            break;
-        case "ArrowLeft":
-            // Handle left navigation
-            break;
-        case "ArrowRight":
-            // Handle right navigation
-            break;
-        case "Enter":
-            // Handle enter key press (e.g., for links)
-            break;
-        default:
-            break;
-    }
+document.addEventListener("DOMContentLoaded", function() {
+    // Initially select the first navigation item
+    let selectedNavItem = document.querySelector("nav ul li:first-child a");
+    selectedNavItem.classList.add("selected");
+
+    document.addEventListener("keydown", function(event) {
+        let currentNavItem = selectedNavItem.parentElement;
+        let newNavItem;
+
+        switch(event.key) {
+            case "ArrowUp":
+                newNavItem = currentNavItem.previousElementSibling || currentNavItem;
+                break;
+            case "ArrowDown":
+                newNavItem = currentNavItem.nextElementSibling || currentNavItem;
+                break;
+            case "ArrowLeft":
+                newNavItem = currentNavItem.previousElementSibling || currentNavItem;
+                break;
+            case "ArrowRight":
+                newNavItem = currentNavItem.nextElementSibling || currentNavItem;
+                break;
+            default:
+                break;
+        }
+
+        if (newNavItem !== currentNavItem) {
+            selectedNavItem.classList.remove("selected");
+            selectedNavItem = newNavItem.querySelector("a");
+            selectedNavItem.classList.add("selected");
+        }
+    });
 });
