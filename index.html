@@ -35,6 +35,7 @@
         let playerX = 50;
         let playerY = 50;
         let rotationAngle = 0;
+        let lastRotationAngle = 0;
 
         // Function to update player position and rotation
         function updatePositionAndRotation() {
@@ -82,7 +83,10 @@
                 playerY = Math.min(Math.max(playerY, 0), 100);
                 
                 // Update rotation angle based on right joystick input
-                rotationAngle = Math.atan2(rightStickY, rightStickX) * (180 / Math.PI);
+                if (rightStickX !== 0 || rightStickY !== 0) {
+                    rotationAngle = Math.atan2(rightStickY, rightStickX) * (180 / Math.PI);
+                    lastRotationAngle = rotationAngle;
+                }
 
                 // Update player position and rotation
                 updatePositionAndRotation();
