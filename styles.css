@@ -30,6 +30,11 @@ nav a {
     color: #333;
 }
 
+/* styles.css */
+nav a.selected {
+    border: 2px solid red; /* Example of a bigger stroke */
+}
+
 main {
     margin-top: 20px;
 }
