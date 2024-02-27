@@ -30,13 +30,17 @@
         const player = document.getElementById('player');
         let leftStickX = 0;
         let leftStickY = 0;
+        let rightStickX = 0;
+        let rightStickY = 0;
         let playerX = 50;
         let playerY = 50;
+        let rotationAngle = 0;
 
-        // Function to update player position
-        function updatePosition() {
+        // Function to update player position and rotation
+        function updatePositionAndRotation() {
             player.style.left = `${playerX}%`;
             player.style.top = `${playerY}%`;
+            player.style.transform = `translate(-50%, -50%) rotate(${rotationAngle}deg)`;
         }
 
         // Event listener for controller input
@@ -49,7 +53,7 @@
             requestAnimationFrame(updateLoop);
         });
 
-        // Game loop to continuously update player position
+        // Game loop to continuously update player position and rotation
         function updateLoop() {
             const gamepads = navigator.getGamepads();
             const ps4Controller = gamepads[0]; // Assuming the PS4 controller is the first connected gamepad
@@ -59,11 +63,17 @@
                 leftStickX = ps4Controller.axes[0];
                 leftStickY = ps4Controller.axes[1];
                 
+                // Update right joystick values
+                rightStickX = ps4Controller.axes[2];
+                rightStickY = ps4Controller.axes[3];
+                
                 // Clamp joystick values to avoid extreme movement
                 leftStickX = Math.min(Math.max(leftStickX, -1), 1);
                 leftStickY = Math.min(Math.max(leftStickY, -1), 1);
+                rightStickX = Math.min(Math.max(rightStickX, -1), 1);
+                rightStickY = Math.min(Math.max(rightStickY, -1), 1);
                 
-                // Update player position based on joystick input with adjusted scaling
+                // Update player position based on left joystick input
                 playerX += leftStickX * 0.5; // Adjust multiplier as needed
                 playerY += leftStickY * 0.5; // Adjust multiplier as needed
 
@@ -71,8 +81,11 @@
                 playerX = Math.min(Math.max(playerX, 0), 100);
                 playerY = Math.min(Math.max(playerY, 0), 100);
                 
-                // Update player position
-                updatePosition();
+                // Update rotation angle based on right joystick input
+                rotationAngle = Math.atan2(rightStickY, rightStickX) * (180 / Math.PI);
+
+                // Update player position and rotation
+                updatePositionAndRotation();
             }
             
             // Continue the loop
